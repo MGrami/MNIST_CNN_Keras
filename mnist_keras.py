@@ -10,13 +10,13 @@ num_classes = 10
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)
-x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
+x_train = x_train.reshape(-1, 28, 28, 1)
+x_test = x_test.reshape(-1, 28, 28, 1)
 
 x_train = x_train.astype('float32')
 x_test = x_test.astype('float32')
-x_train /= 255
-x_test /= 255
+x_train /= 255.0
+x_test /= 255.0
 
 print('x_train shape:', x_train.shape)
 print(x_train.shape[0], 'train samples')
@@ -49,9 +49,9 @@ model.compile(loss=keras.losses.categorical_crossentropy,
 lr_reduction = ReduceLROnPlateau(monitor='val_acc', patience=3, 
                                  verbose=1, factor=0.5, min_lr=0.00001)
 
-dataGen = ImageDataGenerator(rotation_range=10,
+dataGen = ImageDataGenerator(rotation_range=2.5,
                              zoom_range=0.1,
-                             width_shift_range=2.0,
+                             width_shift_range=0.1,
                              height_shift_range=0.1,
                              horizontal_flip=False,
                              vertical_flip=False,
